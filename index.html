@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOLE EMPIRE — Premium Footwear</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#080706;
+  --deep:#0f0e0c;
+  --panel:#161513;
+  --card:#1d1b18;
+  --border:#2a2724;
+  --muted:#5c5750;
+  --sand:#9e9080;
+  --cream:#e8dcc8;
+  --gold:#d4a843;
+  --gold2:#f0c060;
+  --white:#faf7f2;
+  --red:#e63329;
+}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--white);font-family:'Outfit',sans-serif;font-weight:300;overflow-x:hidden;cursor:none}
+
+/* CURSOR */
+#cur{position:fixed;width:12px;height:12px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .25s,height .25s,opacity .3s;mix-blend-mode:difference}
+#cur2{position:fixed;width:40px;height:40px;border:1px solid rgba(212,168,67,.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .12s ease-out,top .12s ease-out,width .3s,height .3s}
+body:has(a:hover) #cur,body:has(button:hover) #cur{width:22px;height:22px}
+
+/* NAV */
+#nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 3rem;background:rgba(8,7,6,.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(212,168,67,.12);transition:all .4s}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;letter-spacing:.12em;color:var(--white);text-decoration:none;display:flex;align-items:center;gap:.3rem}
+.nav-logo .dot{color:var(--gold);font-size:1.2rem}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:var(--sand);text-decoration:none;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;transition:color .3s;font-weight:400}
+.nav-links a:hover{color:var(--gold)}
+.nav-actions{display:flex;align-items:center;gap:1.5rem}
+.nav-icon{background:none;border:none;color:var(--sand);font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;cursor:none;transition:color .3s;font-family:'Outfit',sans-serif}
+.nav-icon:hover{color:var(--white)}
+.cart-pill{background:var(--gold);color:var(--ink);border:none;padding:.55rem 1.5rem;font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;font-family:'Outfit',sans-serif;font-weight:600;cursor:none;transition:background .3s,transform .2s;border-radius:2px}
+.cart-pill:hover{background:var(--gold2);transform:translateY(-1px)}
+
+/* PAGE SECTIONS */
+.page{display:none;min-height:100vh;padding-top:72px}
+.page.active{display:block}
+
+/* ===== HOME PAGE ===== */
+/* HERO */
+.hero{height:100vh;display:grid;grid-template-columns:1fr 1fr;position:relative;overflow:hidden}
+.hero-left{display:flex;flex-direction:column;justify-content:center;padding:0 4rem;position:relative;z-index:2}
+.hero-eyebrow{font-size:.62rem;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:1.8rem;display:flex;align-items:center;gap:1rem}
+.hero-eyebrow::before{content:'';display:block;width:50px;height:1px;background:var(--gold)}
+.hero-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(5rem,9vw,8.5rem);line-height:.9;letter-spacing:.02em;margin-bottom:1.8rem}
+.hero-h1 .italic{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--cream);font-size:.9em}
+.hero-body{color:var(--sand);font-size:.9rem;line-height:1.85;max-width:360px;margin-bottom:2.8rem;font-weight:300}
+.hero-ctas{display:flex;gap:1.2rem;align-items:center}
+.btn-gold{background:var(--gold);color:var(--ink);padding:.9rem 2.2rem;font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;border:none;cursor:none;font-weight:600;font-family:'Outfit',sans-serif;transition:background .3s,transform .2s;text-decoration:none;display:inline-block}
+.btn-gold:hover{background:var(--gold2);transform:translateY(-2px)}
+.btn-outline{background:transparent;color:var(--cream);padding:.9rem 2.2rem;font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;border:1px solid var(--border);cursor:none;font-weight:400;font-family:'Outfit',sans-serif;transition:border-color .3s,color .3s;text-decoration:none;display:inline-block}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold)}
+.hero-right{position:relative;overflow:hidden}
+.hero-img{width:100%;height:100%;object-fit:cover;object-position:center;filter:brightness(.7)}
+.hero-img-overlay{position:absolute;inset:0;background:linear-gradient(90deg,var(--ink) 0%,transparent 40%)}
+.hero-badge-float{position:absolute;bottom:3rem;right:3rem;background:rgba(15,14,12,.9);border:1px solid rgba(212,168,67,.3);backdrop-filter:blur(10px);padding:1.2rem 1.8rem;text-align:center}
+.hbf-num{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:var(--gold);line-height:1}
+.hbf-label{font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;color:var(--sand);margin-top:.2rem}
+.hero-scroll-hint{position:absolute;bottom:2.5rem;left:4rem;display:flex;align-items:center;gap:.8rem;font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+.scroll-bar{width:50px;height:1px;background:var(--border);position:relative;overflow:hidden}
+.scroll-bar::after{content:'';position:absolute;left:-100%;top:0;width:100%;height:1px;background:var(--gold);animation:scrollAnim 2s ease-in-out infinite}
+@keyframes scrollAnim{0%{left:-100%}100%{left:100%}}
+
+/* MARQUEE */
+.marquee-wrap{background:var(--gold);padding:.75rem 0;overflow:hidden}
+.marquee-inner{display:flex;width:max-content;animation:mq 25s linear infinite}
+.marquee-inner span{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.18em;color:var(--ink);padding:0 2.5rem;white-space:nowrap}
+.marquee-inner .bull{opacity:.4}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* BRAND STRIP */
+.brand-strip{padding:3.5rem 4rem;border-bottom:1px solid var(--border)}
+.bs-label{font-size:.58rem;letter-spacing:.35em;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:2.5rem}
+.bs-grid{display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap}
+.brand-btn{background:none;border:none;cursor:none;padding:.5rem 1.5rem;transition:opacity .3s;opacity:.35;font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.2em;color:var(--white)}
+.brand-btn:hover{opacity:1;color:var(--gold)}
+.brand-logo-img{height:28px;width:auto;filter:brightness(0) invert(1);opacity:.35;transition:opacity .3s;cursor:none}
+.brand-logo-img:hover{opacity:.9}
+
+/* PRODUCTS */
+.products-section{padding:5rem 4rem}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3rem}
+.sec-label{font-size:.6rem;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem}
+.sec-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,5vw,4rem);line-height:.95}
+.sec-title em{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--cream)}
+.filter-tabs{display:flex;gap:.5rem}
+.ftab{background:transparent;border:1px solid var(--border);color:var(--sand);padding:.45rem 1.2rem;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;cursor:none;font-family:'Outfit',sans-serif;transition:all .3s}
+.ftab.active,.ftab:hover{background:var(--gold);border-color:var(--gold);color:var(--ink);font-weight:600}
+.products-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5px}
+.prod-card{background:var(--panel);position:relative;overflow:hidden;cursor:none;transition:transform .4s cubic-bezier(.25,.46,.45,.94)}
+.prod-card:hover{transform:translateY(-4px)}
+.prod-img-wrap{position:relative;overflow:hidden;aspect-ratio:3/4;background:var(--card)}
+.prod-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.25,.46,.45,.94),filter .5s}
+.prod-card:hover .prod-img-wrap img{transform:scale(1.06);filter:brightness(.85)}
+.prod-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,7,6,.9) 0%,transparent 50%);opacity:0;transition:opacity .4s;display:flex;flex-direction:column;justify-content:flex-end;padding:1.5rem}
+.prod-card:hover .prod-overlay{opacity:1}
+.prod-quick{display:flex;gap:.6rem}
+.pq-btn{flex:1;background:var(--gold);color:var(--ink);border:none;padding:.7rem;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;font-family:'Outfit',sans-serif;font-weight:600;cursor:none;transition:background .3s}
+.pq-btn:hover{background:var(--gold2)}
+.pq-wish{background:transparent;border:1px solid rgba(255,255,255,.3);color:var(--white);padding:.7rem 1rem;cursor:none;font-size:.9rem;transition:border-color .3s,color .3s}
+.pq-wish:hover{border-color:var(--gold);color:var(--gold)}
+.prod-tag{position:absolute;top:1rem;left:1rem;padding:.3rem .8rem;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;font-weight:600;z-index:2}
+.tag-new{background:var(--gold);color:var(--ink)}
+.tag-hot{background:var(--red);color:var(--white)}
+.tag-sale{background:var(--white);color:var(--ink)}
+.prod-brand-logo{position:absolute;top:1rem;right:1rem;width:36px;height:36px;background:rgba(8,7,6,.7);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;backdrop-filter:blur(8px)}
+.prod-brand-logo img{width:22px;height:auto;filter:brightness(0) invert(1)}
+.prod-info{padding:1.2rem 1.2rem 1.5rem}
+.prod-brand{font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:.3rem}
+.prod-name{font-family:'Cormorant Garamond',serif;font-size:1.1rem;margin-bottom:.6rem;line-height:1.3}
+.prod-foot{display:flex;justify-content:space-between;align-items:center}
+.prod-price{font-size:.95rem;font-weight:500;letter-spacing:.05em}
+.prod-og{font-size:.75rem;color:var(--muted);text-decoration:line-through;margin-left:.5rem}
+.prod-stars{font-size:.65rem;color:var(--gold);letter-spacing:.1em}
+.prod-sizes{display:flex;gap:.3rem;margin-top:.8rem;flex-wrap:wrap}
+.sz{font-size:.55rem;letter-spacing:.1em;border:1px solid var(--border);padding:.25rem .5rem;color:var(--muted);cursor:none;transition:all .3s;font-family:'Outfit',sans-serif}
+.sz:hover{border-color:var(--gold);color:var(--gold)}
+.sz.unavail{opacity:.3;text-decoration:line-through}
+
+/* HERO BANNER */
+.hero-banner{margin:0 4rem 5rem;display:grid;grid-template-columns:1fr 1fr;min-height:520px;overflow:hidden;position:relative}
+.hb-content{background:var(--gold);display:flex;flex-direction:column;justify-content:center;padding:5rem}
+.hb-kicker{font-size:.6rem;letter-spacing:.35em;text-transform:uppercase;color:rgba(0,0,0,.55);margin-bottom:1.5rem;display:flex;align-items:center;gap:.8rem}
+.hb-kicker::before{content:'';width:35px;height:1px;background:rgba(0,0,0,.4);display:block}
+.hb-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,5vw,4.5rem);color:var(--ink);line-height:.95;margin-bottom:1.5rem}
+.hb-desc{font-size:.85rem;color:rgba(0,0,0,.6);line-height:1.8;max-width:340px;margin-bottom:2.5rem}
+.btn-dark{background:var(--ink);color:var(--gold);border:none;padding:.9rem 2.2rem;font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;font-family:'Outfit',sans-serif;font-weight:600;cursor:none;transition:background .3s;text-decoration:none;display:inline-block}
+.btn-dark:hover{background:#1a1815}
+.hb-img{position:relative;overflow:hidden}
+.hb-img img{width:100%;height:100%;object-fit:cover;object-position:center top}
+
+/* CATEGORIES */
+.categories-sec{padding:0 4rem 5rem}
+.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5px}
+.cat-card{position:relative;overflow:hidden;aspect-ratio:3/4;cursor:none}
+.cat-card img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.25,.46,.45,.94),filter .5s}
+.cat-card:hover img{transform:scale(1.08);filter:brightness(.6)}
+.cat-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,7,6,.85) 0%,rgba(8,7,6,.2) 60%,transparent 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:2rem}
+.cat-name{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:.05em;margin-bottom:.3rem;transition:color .3s}
+.cat-card:hover .cat-name{color:var(--gold)}
+.cat-count{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--sand)}
+.cat-arrow{position:absolute;top:1.5rem;right:1.5rem;width:36px;height:36px;border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:.9rem;transition:all .3s;opacity:0}
+.cat-card:hover .cat-arrow{opacity:1;border-color:var(--gold);color:var(--gold);transform:rotate(45deg)}
+
+/* BRANDS PAGE */
+.brands-page{padding:5rem 4rem}
+.brand-section{margin-bottom:5rem}
+.brand-header{display:flex;align-items:center;gap:2rem;margin-bottom:3rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border)}
+.brand-logo-big{width:80px;height:80px;background:var(--panel);border:1px solid var(--border);display:flex;align-items:center;justify-content:center}
+.brand-logo-big img{width:52px;height:auto;filter:brightness(0) invert(1)}
+.brand-info h2{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;letter-spacing:.08em}
+.brand-info p{color:var(--sand);font-size:.8rem;margin-top:.3rem}
+.brand-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5px}
+
+/* PRODUCT DETAIL */
+.detail-page{padding:5rem 4rem}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+.detail-imgs{position:sticky;top:100px}
+.detail-main-img{aspect-ratio:4/5;overflow:hidden;background:var(--panel);margin-bottom:1rem}
+.detail-main-img img{width:100%;height:100%;object-fit:cover}
+.detail-thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.thumb{aspect-ratio:1;overflow:hidden;background:var(--panel);cursor:none;border:2px solid transparent;transition:border-color .3s}
+.thumb.active{border-color:var(--gold)}
+.thumb img{width:100%;height:100%;object-fit:cover;transition:opacity .3s}
+.thumb:hover img{opacity:.75}
+.detail-info{}
+.d-brand{font-size:.62rem;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem;display:flex;align-items:center;gap:.8rem}
+.d-brand img{height:20px;filter:brightness(0) invert(1) sepia(1) hue-rotate(15deg) saturate(5)}
+.d-name{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:400;line-height:1.15;margin-bottom:.5rem}
+.d-sub{font-size:.85rem;color:var(--sand);margin-bottom:1.5rem}
+.d-rating{display:flex;align-items:center;gap:.8rem;margin-bottom:2rem;padding-bottom:2rem;border-bottom:1px solid var(--border)}
+.d-stars{color:var(--gold);font-size:.9rem}
+.d-rev{font-size:.75rem;color:var(--muted)}
+.d-price-row{display:flex;align-items:baseline;gap:1rem;margin-bottom:2rem}
+.d-price{font-size:2rem;font-weight:500;letter-spacing:.02em}
+.d-orig{font-size:1.1rem;color:var(--muted);text-decoration:line-through}
+.d-off{font-size:.75rem;background:rgba(230,51,41,.15);color:var(--red);padding:.2rem .6rem;letter-spacing:.1em}
+.d-section-label{font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem}
+.size-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:.6rem;margin-bottom:2rem}
+.size-opt{background:var(--panel);border:1px solid var(--border);color:var(--sand);padding:.7rem;text-align:center;font-size:.78rem;cursor:none;transition:all .3s;font-family:'Outfit',sans-serif}
+.size-opt:hover,.size-opt.sel{background:var(--gold);border-color:var(--gold);color:var(--ink);font-weight:600}
+.size-opt.unavail{opacity:.3;cursor:not-allowed;text-decoration:line-through}
+.color-row{display:flex;gap:.8rem;margin-bottom:2rem;align-items:center}
+.color-swatch{width:28px;height:28px;border-radius:50%;border:2px solid transparent;cursor:none;transition:all .3s;position:relative}
+.color-swatch.sel{border-color:var(--gold);transform:scale(1.15)}
+.add-actions{display:grid;grid-template-columns:1fr auto;gap:.8rem;margin-bottom:2rem}
+.btn-add{background:var(--gold);color:var(--ink);border:none;padding:1.1rem;font-size:.75rem;letter-spacing:.25em;text-transform:uppercase;font-family:'Outfit',sans-serif;font-weight:700;cursor:none;transition:background .3s}
+.btn-add:hover{background:var(--gold2)}
+.btn-wishlist{background:var(--panel);border:1px solid var(--border);color:var(--white);padding:1.1rem 1.4rem;font-size:1.1rem;cursor:none;transition:all .3s}
+.btn-wishlist:hover{border-color:var(--gold);color:var(--gold)}
+.d-features{display:grid;grid-template-columns:1fr 1fr;gap:1rem;padding:1.5rem;background:var(--panel);border:1px solid var(--border)}
+.d-feat{display:flex;align-items:center;gap:.7rem;font-size:.78rem;color:var(--sand)}
+.d-feat .fi{width:30px;height:30px;background:var(--card);display:flex;align-items:center;justify-content:center;font-size:.85rem;color:var(--gold)}
+.back-btn{background:none;border:none;color:var(--sand);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;cursor:none;font-family:'Outfit',sans-serif;margin-bottom:2rem;display:flex;align-items:center;gap:.5rem;transition:color .3s;padding:0}
+.back-btn:hover{color:var(--gold)}
+
+/* CART */
+.cart-page{padding:5rem 4rem}
+.cart-grid{display:grid;grid-template-columns:2fr 1fr;gap:4rem}
+.cart-item{display:grid;grid-template-columns:100px 1fr auto;gap:1.5rem;align-items:center;padding:1.5rem 0;border-bottom:1px solid var(--border)}
+.cart-item-img{aspect-ratio:1;overflow:hidden;background:var(--panel)}
+.cart-item-img img{width:100%;height:100%;object-fit:cover}
+.ci-brand{font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:.3rem}
+.ci-name{font-family:'Cormorant Garamond',serif;font-size:1.1rem;margin-bottom:.4rem}
+.ci-meta{font-size:.72rem;color:var(--muted)}
+.ci-price{font-size:1.1rem;font-weight:500;white-space:nowrap}
+.qty-ctrl{display:flex;align-items:center;gap:.5rem;margin-top:.8rem}
+.qty-btn{background:var(--panel);border:1px solid var(--border);color:var(--white);width:28px;height:28px;cursor:none;font-size:.9rem;transition:all .3s;display:flex;align-items:center;justify-content:center}
+.qty-btn:hover{border-color:var(--gold);color:var(--gold)}
+.qty-val{min-width:24px;text-align:center;font-size:.85rem}
+.cart-summary{background:var(--panel);border:1px solid var(--border);padding:2.5rem;position:sticky;top:100px;height:fit-content}
+.cs-title{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.08em;margin-bottom:2rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+.cs-row{display:flex;justify-content:space-between;align-items:center;padding:.7rem 0;font-size:.82rem;border-bottom:1px solid var(--border)}
+.cs-row.total{font-size:1.1rem;font-weight:500;color:var(--gold);border-bottom:none;margin-top:.5rem}
+.promo-row{display:flex;gap:.5rem;margin:1.5rem 0}
+.promo-input{flex:1;background:var(--card);border:1px solid var(--border);color:var(--white);padding:.7rem 1rem;font-family:'Outfit',sans-serif;font-size:.78rem;outline:none}
+.promo-input:focus{border-color:var(--gold)}
+.promo-input::placeholder{color:var(--muted)}
+.promo-btn{background:var(--gold);color:var(--ink);border:none;padding:.7rem 1.2rem;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;font-family:'Outfit',sans-serif;font-weight:600;cursor:none}
+.checkout-btn{width:100%;background:var(--gold);color:var(--ink);border:none;padding:1.1rem;font-size:.75rem;letter-spacing:.25em;text-transform:uppercase;font-family:'Outfit',sans-serif;font-weight:700;cursor:none;transition:background .3s;margin-top:1.5rem}
+.checkout-btn:hover{background:var(--gold2)}
+.cart-trust{display:flex;gap:1rem;margin-top:1.5rem;flex-wrap:wrap}
+.ct-item{font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:.4rem}
+
+/* EMPTY CART */
+.empty-cart{text-align:center;padding:6rem 0}
+.empty-cart h3{font-family:'Cormorant Garamond',serif;font-size:2rem;font-style:italic;color:var(--sand);margin-bottom:.5rem}
+.empty-cart p{font-size:.85rem;color:var(--muted);margin-bottom:2rem}
+
+/* FOOTER */
+footer{background:var(--deep);border-top:1px solid var(--border);padding:5rem 4rem 2.5rem}
+.footer-top{display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:4rem;margin-bottom:4rem}
+.fl-logo{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:.12em;color:var(--white);margin-bottom:1rem;display:block}
+.fl-logo span{color:var(--gold)}
+.fl-p{color:var(--muted);font-size:.78rem;line-height:1.9;margin-bottom:1.5rem;max-width:260px}
+.fl-social{display:flex;gap:.8rem}
+.soc-btn{width:34px;height:34px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--muted);cursor:none;transition:all .3s;background:transparent}
+.soc-btn:hover{border-color:var(--gold);color:var(--gold)}
+.fc-h{font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem}
+.fc-links{list-style:none;display:flex;flex-direction:column;gap:.7rem}
+.fc-links a{color:var(--muted);text-decoration:none;font-size:.8rem;transition:color .3s}
+.fc-links a:hover{color:var(--white)}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);padding-top:2rem}
+.fb-copy{font-size:.68rem;color:var(--muted);letter-spacing:.08em}
+.fb-pay{display:flex;gap:.6rem}
+.pay-tag{background:var(--panel);color:var(--muted);font-size:.55rem;padding:.3rem .7rem;letter-spacing:.15em;text-transform:uppercase}
+
+/* TOAST */
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--gold);color:var(--ink);padding:1rem 1.8rem;font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;font-weight:600;z-index:9999;transform:translateY(120px);transition:transform .4s cubic-bezier(.25,.46,.45,.94);border-radius:2px}
+.toast.show{transform:translateY(0)}
+
+/* Loading shimmer */
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+.shimmer{background:linear-gradient(90deg,var(--panel) 25%,var(--card) 50%,var(--panel) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}
+
+/* Animations */
+@keyframes fadeUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+.hero-left > *{animation:fadeUp .9s ease both}
+.hero-eyebrow{animation-delay:.1s}
+.hero-h1{animation-delay:.3s}
+.hero-body{animation-delay:.5s}
+.hero-ctas{animation-delay:.65s}
+
+/* Responsive touch */
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr}
+  .hero-right{display:none}
+  .products-grid{grid-template-columns:repeat(2,1fr)}
+  .cat-grid{grid-template-columns:repeat(2,1fr)}
+  .brand-grid{grid-template-columns:repeat(2,1fr)}
+  .detail-grid{grid-template-columns:1fr}
+  .cart-grid{grid-template-columns:1fr}
+  #nav{padding:1rem 1.5rem}
+  .nav-links{display:none}
+  .hero-left,.products-section,.categories-sec,.brands-page,.detail-page,.cart-page{padding-left:1.5rem;padding-right:1.5rem}
+  footer{padding:3rem 1.5rem}
+}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="cur2"></div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">Added to cart ✓</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo" onclick="showPage('home');return false">SOLE<span class="dot">◆</span>EMPIRE</a>
+  <ul class="nav-links">
+    <li><a href="#" onclick="showPage('home');return false">Home</a></li>
+    <li><a href="#" onclick="filterProducts('all');showPage('home');scrollTo('#products-sec');return false">New Arrivals</a></li>
+    <li><a href="#" onclick="showPage('brands');return false">Brands</a></li>
+    <li><a href="#" onclick="filterProducts('men');showPage('home');return false">Men</a></li>
+    <li><a href="#" onclick="filterProducts('women');showPage('home');return false">Women</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="nav-icon" onclick="showPage('home');return false">Search</button>
+    <button class="cart-pill" onclick="showPage('cart');return false">Cart (<span id="cart-count">0</span>)</button>
+  </div>
+</nav>
+
+<!-- ===================== HOME PAGE ===================== -->
+<div id="page-home" class="page active">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow">SS 2025 — New Collection</div>
+      <h1 class="hero-h1">STEP INTO<br><span class="italic">Greatness</span></h1>
+      <p class="hero-body">Premium footwear from the world's most iconic brands. Nike, Puma, Adidas and beyond — curated for those who move with intention.</p>
+      <div class="hero-ctas">
+        <a href="#" class="btn-gold" onclick="scrollTo('#products-sec');return false">Shop Now</a>
+        <a href="#" class="btn-outline" onclick="showPage('brands');return false">View Brands</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <img class="hero-img" src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=900&q=85&auto=format" alt="Premium sneaker hero" loading="eager">
+      <div class="hero-img-overlay"></div>
+      <div class="hero-badge-float">
+        <div class="hbf-num">500+</div>
+        <div class="hbf-label">Premium Styles</div>
+      </div>
+    </div>
+    <div class="hero-scroll-hint">
+      <div class="scroll-bar"></div>
+      Scroll Down
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-inner" id="mq">
+      <span>Nike Air Max</span><span class="bull">◆</span>
+      <span>Puma RS-X</span><span class="bull">◆</span>
+      <span>Free Shipping ₹3000+</span><span class="bull">◆</span>
+      <span>New Arrivals Daily</span><span class="bull">◆</span>
+      <span>Adidas Ultraboost</span><span class="bull">◆</span>
+      <span>New Balance 990</span><span class="bull">◆</span>
+      <span>Premium Leather</span><span class="bull">◆</span>
+      <span>Limited Editions</span><span class="bull">◆</span>
+      <span>Nike Air Max</span><span class="bull">◆</span>
+      <span>Puma RS-X</span><span class="bull">◆</span>
+      <span>Free Shipping ₹3000+</span><span class="bull">◆</span>
+      <span>New Arrivals Daily</span><span class="bull">◆</span>
+      <span>Adidas Ultraboost</span><span class="bull">◆</span>
+      <span>New Balance 990</span><span class="bull">◆</span>
+      <span>Premium Leather</span><span class="bull">◆</span>
+      <span>Limited Editions</span><span class="bull">◆</span>
+    </div>
+  </div>
+
+  <!-- BRAND STRIP -->
+  <div class="brand-strip">
+    <div class="bs-label">Official Brand Partners</div>
+    <div class="bs-grid">
+      <button class="brand-btn" onclick="showBrand('nike')">NIKE</button>
+      <button class="brand-btn" onclick="showBrand('puma')">PUMA</button>
+      <button class="brand-btn" onclick="showBrand('adidas')">ADIDAS</button>
+      <button class="brand-btn" onclick="showBrand('newbalance')">NEW BALANCE</button>
+      <button class="brand-btn" onclick="showBrand('reebok')">REEBOK</button>
+      <button class="brand-btn" onclick="showBrand('converse')">CONVERSE</button>
+    </div>
+  </div>
+
+  <!-- PRODUCTS -->
+  <section class="products-section" id="products-sec">
+    <div class="sec-head">
+      <div>
+        <div class="sec-label">Trending Now</div>
+        <h2 class="sec-title">Featured <em>Styles</em></h2>
+      </div>
+      <div class="filter-tabs">
+        <button class="ftab active" onclick="filterProducts('all',this)">All</button>
+        <button class="ftab" onclick="filterProducts('men',this)">Men</button>
+        <button class="ftab" onclick="filterProducts('women',this)">Women</button>
+        <button class="ftab" onclick="filterProducts('kids',this)">Kids</button>
+      </div>
+    </div>
+    <div class="products-grid" id="products-grid">
+      <!-- Injected by JS -->
+    </div>
+  </section>
+
+  <!-- FEATURED BANNER -->
+  <div class="hero-banner">
+    <div class="hb-content">
+      <div class="hb-kicker">Limited Edition Drop</div>
+      <h2 class="hb-title">NIKE AIR MAX<br>95 OG — NEON</h2>
+      <p class="hb-desc">One of the most iconic colourways in sneaker history. Re-released in premium quality with the original neon gradient. Sizes running out fast.</p>
+      <a href="#" class="btn-dark" onclick="openProduct(0);return false">Shop Now — ₹18,995</a>
+    </div>
+    <div class="hb-img">
+      <img src="https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=800&q=85&auto=format" alt="Nike Air Max featured" style="width:100%;height:100%;object-fit:cover">
+    </div>
+  </div>
+
+  <!-- CATEGORIES -->
+  <section class="categories-sec">
+    <div class="sec-head">
+      <div>
+        <div class="sec-label">Shop By Type</div>
+        <h2 class="sec-title">Browse <em>Categories</em></h2>
+      </div>
+    </div>
+    <div class="cat-grid">
+      <div class="cat-card" onclick="filterProducts('sneakers');scrollTo('#products-sec')">
+        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80&auto=format" alt="Sneakers">
+        <div class="cat-overlay">
+          <div class="cat-name">Sneakers</div>
+          <div class="cat-count">142 styles</div>
+        </div>
+        <div class="cat-arrow">↗</div>
+      </div>
+      <div class="cat-card" onclick="filterProducts('running');scrollTo('#products-sec')">
+        <img src="https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=600&q=80&auto=format" alt="Running">
+        <div class="cat-overlay">
+          <div class="cat-name">Running</div>
+          <div class="cat-count">86 styles</div>
+        </div>
+        <div class="cat-arrow">↗</div>
+      </div>
+      <div class="cat-card" onclick="filterProducts('casual');scrollTo('#products-sec')">
+        <img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=600&q=80&auto=format" alt="Casual">
+        <div class="cat-overlay">
+          <div class="cat-name">Casual</div>
+          <div class="cat-count">95 styles</div>
+        </div>
+        <div class="cat-arrow">↗</div>
+      </div>
+      <div class="cat-card" onclick="filterProducts('boots');scrollTo('#products-sec')">
+        <img src="https://images.unsplash.com/photo-1638247025967-b4e38f787b76?w=600&q=80&auto=format" alt="Boots">
+        <div class="cat-overlay">
+          <div class="cat-name">Boots</div>
+          <div class="cat-count">54 styles</div>
+        </div>
+        <div class="cat-arrow">↗</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div>
+        <span class="fl-logo">SOLE<span>◆</span>EMPIRE</span>
+        <p class="fl-p">Your destination for premium footwear from the world's most iconic brands. Authentic. Curated. Delivered.</p>
+        <div class="fl-social">
+          <button class="soc-btn">IG</button>
+          <button class="soc-btn">FB</button>
+          <button class="soc-btn">TW</button>
+          <button class="soc-btn">YT</button>
+        </div>
+      </div>
+      <div>
+        <div class="fc-h">Shop</div>
+        <ul class="fc-links">
+          <li><a href="#" onclick="filterProducts('all');scrollTo('#products-sec');return false">New Arrivals</a></li>
+          <li><a href="#" onclick="showBrand('nike');return false">Nike</a></li>
+          <li><a href="#" onclick="showBrand('puma');return false">Puma</a></li>
+          <li><a href="#" onclick="showBrand('adidas');return false">Adidas</a></li>
+          <li><a href="#" onclick="showPage('home');return false">Sale</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="fc-h">Help</div>
+        <ul class="fc-links">
+          <li><a href="#">Size Guide</a></li>
+          <li><a href="#">Shipping Info</a></li>
+          <li><a href="#">Returns</a></li>
+          <li><a href="#">Track Order</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="fc-h">Company</div>
+        <ul class="fc-links">
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Sustainability</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="fb-copy">© 2025 Sole Empire. All rights reserved. Prices in INR.</div>
+      <div class="fb-pay">
+        <span class="pay-tag">Visa</span>
+        <span class="pay-tag">Mastercard</span>
+        <span class="pay-tag">UPI</span>
+        <span class="pay-tag">PayTM</span>
+        <span class="pay-tag">EMI</span>
+      </div>
+    </div>
+  </footer>
+
+</div><!-- end home page -->
+
+<!-- ===================== BRANDS PAGE ===================== -->
+<div id="page-brands" class="page">
+  <div class="brands-page">
+    <div style="margin-bottom:3rem">
+      <div class="sec-label">All Partners</div>
+      <h1 class="sec-title" style="font-family:'Bebas Neue',sans-serif;font-size:4rem">Our <em style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--cream)">Brands</em></h1>
+    </div>
+    <div id="all-brands-grid"></div>
+  </div>
+</div>
+
+<!-- ===================== PRODUCT DETAIL ===================== -->
+<div id="page-detail" class="page">
+  <div class="detail-page">
+    <button class="back-btn" onclick="history.go(-1) || showPage('home')">← Back to Shop</button>
+    <div class="detail-grid" id="detail-content"></div>
+  </div>
+</div>
+
+<!-- ===================== CART PAGE ===================== -->
+<div id="page-cart" class="page">
+  <div class="cart-page">
+    <div style="margin-bottom:2.5rem">
+      <div class="sec-label">Your Selection</div>
+      <h1 class="sec-title" style="font-family:'Bebas Neue',sans-serif;font-size:3rem">Shopping <em style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--cream)">Cart</em></h1>
+    </div>
+    <div id="cart-content"></div>
+  </div>
+</div>
+
+<script>
+// ======================== DATA ========================
+const BRANDS = {
+  nike: { name:'Nike', tagline:'Just Do It', color:'#f5f5f5', desc:'The world\'s leading athletic footwear brand, synonymous with performance and style since 1964.' },
+  puma: { name:'Puma', tagline:'Forever Faster', color:'#ff0000', desc:'German sportswear giant known for bold designs and cutting-edge athletic performance.' },
+  adidas: { name:'Adidas', tagline:'Impossible Is Nothing', color:'#000000', desc:'Three stripes of innovation since 1949. From track to street, adidas defines global sport culture.' },
+  newbalance: { name:'New Balance', tagline:'Fearlessly Independent', color:'#cf0a2c', desc:'Crafted with purpose. New Balance blends heritage craft with modern running technology.' },
+  reebok: { name:'Reebok', tagline:'Be More Human', color:'#cc0000', desc:'Born in the UK, raised globally. Reebok pioneers fitness and lifestyle footwear.' },
+  converse: { name:'Converse', tagline:'Shoes Are Boring. Wear Sneakers.', color:'#000000', desc:'The original sneaker since 1908. Canvas and rubber that defined generations of self-expression.' }
+};
+
+const PRODUCTS = [
+  { id:0, brand:'nike', name:'Air Max 95 OG', sub:'Neon / Black / Voltage Yellow', price:18995, orig:22000, tag:'new', gender:'men', cat:'sneakers',
+    img:'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=600&q=80&auto=format',
+    imgs:['https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=600&q=80&auto=format','https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80&auto=format','https://images.unsplash.com/photo-1608231387042-66d1773d3028?w=600&q=80&auto=format','https://images.unsplash.com/photo-1605408499391-6368c628ef42?w=600&q=80&auto=format'],
+    sizes:['UK 6','UK 7','UK 8','UK 9','UK 10','UK 11','UK 12'], colors:['#d4d4d4','#1a1a1a','#ffd700'],
+    rating:4.8, reviews:2340, desc:'The Air Max 95 OG Neon returns in all its original glory. Max cushioning in a visually striking silhouette that shocked the sneaker world in 1995.' },
+  { id:1, brand:'puma', name:'RS-X Efekt', sub:'Puma White / Team Royal', price:9995, tag:'hot', gender:'men', cat:'sneakers',
+    img:'https://images.unsplash.com/photo-1608231387042-66d1773d3028?w=600&q=80&auto=format',
+    imgs:['https://images.unsplash.com/photo-1608231387042-66d1773d3028?w=600&q=80&auto=format','https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80&auto=format','https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=600&q=80&auto=format','https://images.unsplash.com/photo-1605408499391-6368c628ef42?w=600&q=80&auto=format'],
+    sizes:['UK 6','UK 7','UK 8','UK 9','UK 10','UK 11'], colors:['#ffffff','#003087','#ff4000'],
+    rating:4.6, reviews:987, desc:'The RS-X Efekt takes the iconic RS (Running System) Technology and amplifies it with bold colourways and an exaggerated silhouette.' },
+  { id:2, brand:'adidas', name:'Ultraboost 23', sub:'Core Black / Carbon', price:15999, tag:'new', gender:'women', cat:'running',
+    img:'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=600&q=80&auto=format',
+    imgs:['https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=600&q=80&auto=format','https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80&auto=format','https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=600&q=80&auto=format','https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=600&q=80&auto=format'],
+    sizes:['UK 4','UK 5','UK 6','UK 7','UK 8','UK 9'], colors:['#1a1a1a','#ffffff','#5cb8b2'],
+    rating:4.9, reviews:5612, desc:'Every stride energised. The Ultraboost 23 features 20% more Boost than the original, with an updated Primeknit+ upper for ultimate comfort.' },
+  { id:3, brand:'nike', name:'Air Force 1 \'07', sub:'White / White', price:8495, tag:'sale', orig:10995, gender:'men', cat:'casual',
+    img:'https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=600&q=80&auto=format',
+    imgs:['https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=600&q=80&auto=format','https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80&auto=format','https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=600&q=80&auto=format','https://images.unsplash.com/photo-1605408499391-6368c628ef42?w=600&q=80&auto=format'],
+    sizes:['UK 6','UK 7','UK 8','UK 9','UK 10','UK 11','UK 12'], colors:['#ffffff','#000000','#ff4500'],
+    rating:4.7, reviews:18340, desc:'The legend lives on. The Nike Air Force 1 \'07 brings you an iconic look that matches great with everything.' },
+  { id:4, brand:'puma', name:'Suede Classic XXI', sub:'Peacoat / Peacoat', price:6499, gender:'men', cat:'casual',
+    img:'https://images.unsplash.com/photo-1605408499391-6368c628ef42?w=600&q=80&auto=format',
+    imgs:['https://images.unsplash.com/photo-1605408499391-6368c628ef42?w=600&q=80&auto=format','https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80&auto=format','https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=600&q=80&auto=format','https://images.unsplash.com/photo-1608231387042-66d1773d3028?w=600&q=80&auto=format'],
+    sizes:['UK 6','UK 7','UK 8','UK 9','UK 10'], colors:['#1a1a4e','#1a1a1a','#8b0000'],
+    rating:4.5, reviews:3421, desc:'Launched in 1968 and still fresh. The Puma Suede is a timeless silhouette that defines streetwear culture across generations.' },
+  { id:5, brand:'newbalance', name:'990v6', sub:'Made in USA — Grey', price:22999, tag:'new', gender:'women', cat:'running',
+    img:'https://images.unsplash.com/photo-1539185441755-769473a23570?w=600&q=80&auto=format',
+    imgs:['https://images.unsplash.com/photo-1539185441755-769473a23570?w=600&q=80&auto=format','https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80&auto=format','https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=600&q=80&auto=format','https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=600&q=80&auto=format'],
+    sizes:['UK 4','UK 5','UK 6','UK 7','UK 8'], colors:['#888888','#1a1a1a','#c0392b'],
+    rating:4.9, reviews:876, desc:'Made in America since 1982. The 990v6 represents New Balance\'s pinnacle of cushioning, stability, and heritage craftsmanship.' },
+  { id:6, brand:'adidas', name:'Samba OG', sub:'Core Black / Cloud White', price:9499, tag:'hot', gender:'men', cat:'casual',
+    img:'https://images.unsplash.com/photo-1584735175315-9d5df23be6eb?w=600&q=80&auto=format',
+    imgs:['https://images.unsplash.com/photo-1584735175315-9d5df23be6eb?w=600&q=80&auto=format','https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80&auto=format','https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=600&q=80&auto=format','https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=600&q=80&auto=format'],
+    sizes:['UK 6','UK 7','UK 8','UK 9','UK 10','UK 11'], colors:['#1a1a1a','#ffffff','#556b2f'],
+    rating:4.8, reviews:7123, desc:'Originally designed for indoor football in 1949, the Samba OG is now the definitive everyday sneaker. Gum sole, suede overlays, timeless.' },
+  { id:7, brand:'nike', name:'Pegasus 41', sub:'Black / Anthracite', price:11999, tag:'new', gender:'women', cat:'running',
+    img:'https://images.unsplash.com/photo-1579338908476-3a3a1d71a706?w=600&q=80&auto=format',
+    imgs:['https://images.unsplash.com/photo-1579338908476-3a3a1d71a706?w=600&q=80&auto=format','https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80&auto=format','https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=600&q=80&auto=format','https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=600&q=80&auto=format'],
+    sizes:['UK 4','UK 5','UK 6','UK 7','UK 8','UK 9'], colors:['#1a1a1a','#ffffff','#ff4500'],
+    rating:4.7, reviews:4210, desc:'For 41 years, the Pegasus has been a trusted training partner. The Pegasus 41 features React foam and an engineered mesh upper for the ultimate ride.' }
+];
+
+// ======================== STATE ========================
+let cart = [];
+let currentFilter = 'all';
+let currentProduct = null;
+let pageHistory = ['home'];
+
+// ======================== NAVIGATION ========================
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  window.scrollTo(0,0);
+  if(id==='brands') renderBrandsPage();
+  if(id==='cart') renderCart();
+  pageHistory.push(id);
+}
+
+function showBrand(brandKey) {
+  showPage('brands');
+  setTimeout(()=>{
+    const el = document.getElementById('brand-sec-'+brandKey);
+    if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+  },100);
+}
+
+function scrollTo(sel) {
+  setTimeout(()=>{
+    const el = document.querySelector(sel);
+    if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+  },50);
+}
+
+// ======================== PRODUCTS ========================
+function filterProducts(filter, btn) {
+  currentFilter = filter;
+  document.querySelectorAll('.ftab').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  renderProducts();
+}
+
+function renderProducts() {
+  const grid = document.getElementById('products-grid');
+  if(!grid) return;
+  let items = currentFilter==='all' ? PRODUCTS : PRODUCTS.filter(p=>p.gender===currentFilter||p.cat===currentFilter||p.brand===currentFilter);
+  if(!items.length) items = PRODUCTS;
+  grid.innerHTML = items.map(p => `
+    <div class="prod-card" onclick="openProduct(${p.id})">
+      ${p.tag?`<span class="prod-tag tag-${p.tag}">${p.tag==='new'?'New':p.tag==='hot'?'🔥 Hot':'Sale'}</span>`:''}
+      <div class="prod-brand-logo"><span style="font-family:'Bebas Neue',sans-serif;font-size:.55rem;letter-spacing:.1em;color:var(--gold)">${p.brand.slice(0,3).toUpperCase()}</span></div>
+      <div class="prod-img-wrap">
+        <img src="${p.img}" alt="${p.name}" loading="lazy">
+        <div class="prod-overlay">
+          <div class="prod-quick">
+            <button class="pq-btn" onclick="event.stopPropagation();addToCart(${p.id})">Add to Cart</button>
+            <button class="pq-wish" onclick="event.stopPropagation();showToast('Saved to Wishlist ♡')">♡</button>
+          </div>
+        </div>
+      </div>
+      <div class="prod-info">
+        <div class="prod-brand">${BRANDS[p.brand].name}</div>
+        <div class="prod-name">${p.name}</div>
+        <div class="prod-foot">
+          <div>
+            <span class="prod-price">₹${p.price.toLocaleString('en-IN')}</span>
+            ${p.orig?`<span class="prod-og">₹${p.orig.toLocaleString('en-IN')}</span>`:''}
+          </div>
+          <div class="prod-stars">${'★'.repeat(Math.floor(p.rating))}${'☆'.repeat(5-Math.floor(p.rating))}</div>
+        </div>
+        <div class="prod-sizes">${p.sizes.slice(0,4).map(s=>`<span class="sz">${s}</span>`).join('')}${p.sizes.length>4?`<span class="sz">+${p.sizes.length-4}</span>`:''}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ======================== PRODUCT DETAIL ========================
+let selSize = null, selColor = 0, detailImg = 0;
+
+function openProduct(id) {
+  currentProduct = PRODUCTS.find(p=>p.id===id);
+  selSize = null; selColor = 0; detailImg = 0;
+  renderDetail();
+  showPage('detail');
+}
+
+function renderDetail() {
+  const p = currentProduct;
+  const discount = p.orig ? Math.round((1-p.price/p.orig)*100) : 0;
+  document.getElementById('detail-content').innerHTML = `
+    <div class="detail-imgs">
+      <div class="detail-main-img">
+        <img id="dmain" src="${p.imgs[0]}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover">
+      </div>
+      <div class="detail-thumbs">
+        ${p.imgs.map((img,i)=>`
+          <div class="thumb ${i===0?'active':''}" id="thumb-${i}" onclick="setDetailImg(${i})">
+            <img src="${img}" alt="">
+          </div>`).join('')}
+      </div>
+    </div>
+    <div class="detail-info">
+      <div class="d-brand">
+        <span style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.12em;color:var(--gold)">${BRANDS[p.brand].name.toUpperCase()}</span>
+      </div>
+      <h1 class="d-name">${p.name}</h1>
+      <div class="d-sub">${p.sub}</div>
+      <div class="d-rating">
+        <span class="d-stars">${'★'.repeat(Math.floor(p.rating))}${'☆'.repeat(5-Math.floor(p.rating))}</span>
+        <span style="font-size:.85rem;font-weight:500">${p.rating}</span>
+        <span class="d-rev">(${p.reviews.toLocaleString('en-IN')} reviews)</span>
+      </div>
+      <div class="d-price-row">
+        <span class="d-price">₹${p.price.toLocaleString('en-IN')}</span>
+        ${p.orig?`<span class="d-orig">₹${p.orig.toLocaleString('en-IN')}</span><span class="d-off">${discount}% OFF</span>`:''}
+      </div>
+      <div class="d-section-label">Select Colour</div>
+      <div class="color-row" id="color-row">
+        ${p.colors.map((c,i)=>`<div class="color-swatch ${i===0?'sel':''}" style="background:${c};border-color:${i===0?'var(--gold)':'transparent'}" onclick="selectColor(${i})" title="${c}"></div>`).join('')}
+      </div>
+      <div class="d-section-label">Select Size (UK)</div>
+      <div class="size-grid">
+        ${p.sizes.map(s=>`<button class="size-opt" onclick="selectSize(this,'${s}')">${s.replace('UK ','')}</button>`).join('')}
+      </div>
+      <div style="font-size:.65rem;color:var(--muted);letter-spacing:.1em;margin-bottom:1.5rem;margin-top:-.5rem">Inclusive of all taxes. Free delivery above ₹3,000</div>
+      <div class="add-actions">
+        <button class="btn-add" onclick="addToCartDetail()">Add to Cart</button>
+        <button class="btn-wishlist">♡</button>
+      </div>
+      <div class="d-features">
+        <div class="d-feat"><div class="fi">🚚</div>Free Shipping above ₹3000</div>
+        <div class="d-feat"><div class="fi">↩️</div>30-Day Easy Returns</div>
+        <div class="d-feat"><div class="fi">✅</div>100% Authentic Guarantee</div>
+        <div class="d-feat"><div class="fi">📦</div>Delivered in 2–5 Days</div>
+      </div>
+      <div style="margin-top:2rem;padding:1.5rem;background:var(--panel);border:1px solid var(--border)">
+        <div class="d-section-label" style="margin-bottom:.8rem">About this shoe</div>
+        <p style="font-size:.82rem;color:var(--sand);line-height:1.85">${p.desc}</p>
+      </div>
+    </div>
+  `;
+}
+
+function setDetailImg(i) {
+  const p = currentProduct;
+  document.getElementById('dmain').src = p.imgs[i];
+  document.querySelectorAll('.thumb').forEach((t,idx)=>t.classList.toggle('active',idx===i));
+}
+
+function selectSize(btn, size) {
+  selSize = size;
+  document.querySelectorAll('.size-opt').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+}
+
+function selectColor(i) {
+  selColor = i;
+  document.querySelectorAll('.color-swatch').forEach((s,idx)=>{
+    s.classList.toggle('sel',idx===i);
+    s.style.borderColor = idx===i?'var(--gold)':'transparent';
+  });
+}
+
+function addToCartDetail() {
+  if(!selSize){showToast('Please select a size!');return;}
+  addToCart(currentProduct.id, selSize);
+}
+
+// ======================== CART ========================
+function addToCart(id, size) {
+  const p = PRODUCTS.find(pr=>pr.id===id);
+  const sz = size || p.sizes[0];
+  const existing = cart.find(c=>c.id===id&&c.size===sz);
+  if(existing) existing.qty++;
+  else cart.push({...p, size:sz, qty:1});
+  document.getElementById('cart-count').textContent = cart.reduce((a,c)=>a+c.qty,0);
+  showToast('Added to Cart ✓');
+}
+
+function renderCart() {
+  const el = document.getElementById('cart-content');
+  if(!cart.length){
+    el.innerHTML=`<div class="empty-cart"><h3>Your cart is empty</h3><p>Looks like you haven't added anything yet.</p><button class="btn-gold" onclick="showPage('home')">Continue Shopping</button></div>`;
+    return;
+  }
+  const subtotal = cart.reduce((a,c)=>a+c.price*c.qty,0);
+  const shipping = subtotal>3000?0:199;
+  const total = subtotal+shipping;
+  el.innerHTML=`
+    <div class="cart-grid">
+      <div>
+        <div style="font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem">${cart.reduce((a,c)=>a+c.qty,0)} items</div>
+        ${cart.map((item,i)=>`
+          <div class="cart-item">
+            <div class="cart-item-img"><img src="${item.img}" alt="${item.name}"></div>
+            <div>
+              <div class="ci-brand">${BRANDS[item.brand].name}</div>
+              <div class="ci-name">${item.name}</div>
+              <div class="ci-meta">Size: ${item.size} &nbsp;·&nbsp; ${item.sub}</div>
+              <div class="qty-ctrl">
+                <button class="qty-btn" onclick="changeQty(${i},-1)">−</button>
+                <span class="qty-val">${item.qty}</span>
+                <button class="qty-btn" onclick="changeQty(${i},1)">+</button>
+                <button style="background:none;border:none;color:var(--muted);font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;cursor:none;margin-left:1rem;font-family:'Outfit',sans-serif;transition:color .3s" onmouseover="this.style.color='var(--red)'" onmouseout="this.style.color='var(--muted)'" onclick="removeCart(${i})">Remove</button>
+              </div>
+            </div>
+            <div class="ci-price">₹${(item.price*item.qty).toLocaleString('en-IN')}</div>
+          </div>
+        `).join('')}
+      </div>
+      <div>
+        <div class="cart-summary">
+          <div class="cs-title">Order Summary</div>
+          <div class="cs-row"><span>Subtotal</span><span>₹${subtotal.toLocaleString('en-IN')}</span></div>
+          <div class="cs-row"><span>Shipping</span><span>${shipping===0?'<span style="color:var(--gold)">FREE</span>':'₹'+shipping}</span></div>
+          <div class="cs-row total"><span>Total</span><span>₹${total.toLocaleString('en-IN')}</span></div>
+          <div class="promo-row">
+            <input class="promo-input" placeholder="Promo code" id="promo-in">
+            <button class="promo-btn" onclick="applyPromo()">Apply</button>
+          </div>
+          <button class="checkout-btn" onclick="showToast('Proceeding to checkout...')">Proceed to Checkout →</button>
+          <div class="cart-trust">
+            <span class="ct-item">✅ Secure checkout</span>
+            <span class="ct-item">🔒 SSL encrypted</span>
+            <span class="ct-item">↩️ Free returns</span>
+          </div>
+        </div>
+        <div style="margin-top:1.5rem;padding:1.2rem;background:var(--panel);border:1px solid var(--border)">
+          <div style="font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem">Accepted Payments</div>
+          <div style="display:flex;gap:.6rem;flex-wrap:wrap">
+            ${['Visa','MC','Rupay','UPI','PayTM','GPay','EMI'].map(m=>`<span class="pay-tag">${m}</span>`).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function changeQty(i, delta) {
+  cart[i].qty = Math.max(1, cart[i].qty+delta);
+  document.getElementById('cart-count').textContent = cart.reduce((a,c)=>a+c.qty,0);
+  renderCart();
+}
+
+function removeCart(i) {
+  cart.splice(i,1);
+  document.getElementById('cart-count').textContent = cart.reduce((a,c)=>a+c.qty,0);
+  renderCart();
+}
+
+function applyPromo() {
+  const code = document.getElementById('promo-in').value.toUpperCase().trim();
+  if(code==='SOLE10') showToast('10% discount applied ✓');
+  else if(code==='FIRST20') showToast('20% off on first order ✓');
+  else showToast('Invalid promo code');
+}
+
+// ======================== BRANDS PAGE ========================
+function renderBrandsPage() {
+  const container = document.getElementById('all-brands-grid');
+  if(!container) return;
+  container.innerHTML = Object.keys(BRANDS).map(key => {
+    const b = BRANDS[key];
+    const bProds = PRODUCTS.filter(p=>p.brand===key);
+    return `
+      <div class="brand-section" id="brand-sec-${key}">
+        <div class="brand-header">
+          <div class="brand-logo-big">
+            <span style="font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.15em;color:var(--white)">${b.name.slice(0,3).toUpperCase()}</span>
+          </div>
+          <div class="brand-info">
+            <h2>${b.name}</h2>
+            <p>${b.tagline}</p>
+          </div>
+          <div style="flex:1;text-align:right">
+            <button class="btn-outline" onclick="filterProducts('${key}');showPage('home');scrollTo('#products-sec')" style="cursor:none">View All ${b.name} →</button>
+          </div>
+        </div>
+        <p style="font-size:.85rem;color:var(--sand);line-height:1.8;margin-bottom:2rem;max-width:600px">${b.desc}</p>
+        <div class="brand-grid">
+          ${bProds.slice(0,4).map(p=>`
+            <div class="prod-card" onclick="openProduct(${p.id})">
+              ${p.tag?`<span class="prod-tag tag-${p.tag}">${p.tag==='new'?'New':p.tag==='hot'?'Hot':'Sale'}</span>`:''}
+              <div class="prod-img-wrap">
+                <img src="${p.img}" alt="${p.name}" loading="lazy">
+                <div class="prod-overlay">
+                  <div class="prod-quick">
+                    <button class="pq-btn" onclick="event.stopPropagation();addToCart(${p.id})">Add to Cart</button>
+                    <button class="pq-wish" onclick="event.stopPropagation();showToast('Saved ♡')">♡</button>
+                  </div>
+                </div>
+              </div>
+              <div class="prod-info">
+                <div class="prod-brand">${BRANDS[p.brand].name}</div>
+                <div class="prod-name">${p.name}</div>
+                <div class="prod-foot">
+                  <span class="prod-price">₹${p.price.toLocaleString('en-IN')}</span>
+                  <span class="prod-stars">${'★'.repeat(Math.floor(p.rating))}</span>
+                </div>
+              </div>
+            </div>
+          `).join('')}
+          ${bProds.length<4?[...Array(4-bProds.length)].map(()=>`
+            <div style="background:var(--panel);aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;border:1px dashed var(--border)">
+              <span style="font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)">Coming Soon</span>
+            </div>`).join(''):''}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ======================== TOAST ========================
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
+}
+
+// ======================== CURSOR ========================
+const cur = document.getElementById('cur');
+const cur2 = document.getElementById('cur2');
+let mx=0,my=0,cx=0,cy=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function animCursor(){cx+=(mx-cx)*.12;cy+=(my-cy)*.12;cur2.style.left=cx+'px';cur2.style.top=cy+'px';requestAnimationFrame(animCursor)})();
+document.addEventListener('mousedown',()=>cur.style.transform='translate(-50%,-50%) scale(.7)');
+document.addEventListener('mouseup',()=>cur.style.transform='translate(-50%,-50%) scale(1)');
+
+// ======================== INIT ========================
+renderProducts();
+renderBrandsPage();
+
+// Sticky nav enhancement
+window.addEventListener('scroll',()=>{
+  const nav = document.getElementById('nav');
+  nav.style.background = scrollY>50?'rgba(8,7,6,.98)':'rgba(8,7,6,.85)';
+});
+</script>
+</body>
+</html>
